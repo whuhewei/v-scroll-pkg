@@ -1,0 +1,20 @@
+/**
+ * url 由 Vite 解析为构建产物路径。
+ * grab.svg 约 15×14，热点 7 7；scroll.svg viewBox 24×24，热点取中心 12 12。
+ */
+
+/* 悬停在滑块上：滚动指示光标 */
+v-scroll::part(thumb):hover {
+    cursor: url(./assets/scroll.svg) 12 12, ns-resize !important;
+}
+
+/* 拖拽中：整页抓取光标（含滑块上仍显示 grab） */
+v-scroll.dragging,
+v-scroll.dragging * {
+    cursor: url(./assets/grab.svg) 7 7, grabbing !important;
+}
+
+v-scroll.dragging::part(thumb),
+v-scroll.dragging::part(thumb):hover {
+    cursor: url(./assets/grab.svg) 7 7, grabbing !important;
+}

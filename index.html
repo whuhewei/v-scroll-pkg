@@ -1,13 +1,58 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>v-scroll-pkg</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>v-scroll 虚拟滚动条演示</title>
+
+    <!-- 组件模板 -->
+    <template id="v-scroll-template">
+        <div class="viewport" part="viewport">
+            <slot></slot>
+        </div>
+        <div class="track" part="track">
+            <b class="thumb" part="thumb"></b>
+        </div>
+    </template>
+
+    <style>
+        /* 外部通过 ::part() 定制外观 */
+        v-scroll::part(thumb) {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        v-scroll::part(track) {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .demo-container {
+            width: 300px;
+            height: 640px;
+            margin: 60px auto;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            font-family: system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div class="demo-container">
+    <v-scroll>
+        <div class="demo-content"></div>
+    </v-scroll>
+</div>
+
+<script type="module">
+    const VIBE_LINE_COUNT = 100;
+    const DEMO_CONTENT_ROOT = document.querySelector('.demo-content');
+    const DEMO_LINES_FRAGMENT = document.createDocumentFragment();
+    for (let i = 0; i < VIBE_LINE_COUNT; i++) {
+        const LINE = document.createElement('p');
+        LINE.textContent = `Welcome to vibe ${i}`;
+        DEMO_LINES_FRAGMENT.append(LINE);
+    }
+    DEMO_CONTENT_ROOT.append(DEMO_LINES_FRAGMENT);
+</script>
+<script type="module" src="/src/v-scroll.js"></script>
+</body>
 </html>
